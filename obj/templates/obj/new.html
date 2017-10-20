@@ -1,0 +1,8 @@
+<h1>Create a new obj</h1>
+
+<form action="{% url 'obj:do_create' %}" method="post">
+{% csrf_token %}
+<label for="name">name: </label>
+<input id="name" name="name" type="text" />
+<input type='submit' value="OK">
+</form>

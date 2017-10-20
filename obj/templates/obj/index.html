@@ -1,0 +1,12 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+{% if objs %}
+    <ul>
+    {% for obj in objs %}
+        <li><a href="{% url 'obj:detail' obj.id %}">{{ obj.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No objs are available.</p>
+{% endif %}

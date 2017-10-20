@@ -1,0 +1,11 @@
+*.pyc
+*/build
+*/dist
+*/*.spec
+.project
+.pydevproject
+.settings
+gui/initialdir.txt
+*.log
+*.pkl
+*.sqlite3

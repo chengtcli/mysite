@@ -1,0 +1,9 @@
+<h1>{{ obj.name }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<label >id</label>: <label> {{ obj.id }} </label> <br/>
+<label >name</label>: <label> {{ obj.name }} </label> <br/>
+<label >created_at</label>: <label> {{ obj.created_at }} </label> <br/>
+<label >last_update</label>: <label> {{ obj.last_update }} </label> <br/>
+<label >is_public</label>: <label> {{ obj.is_public }} </label> <br/>
