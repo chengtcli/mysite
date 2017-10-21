@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-import ldap
-from django_auth_ldap.config import LDAPSearch
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -125,12 +123,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # ldap condiguration
-AUTHENTICATION_BACKENDS = (
-    'django_auth_ldap.backend.LDAPBackend',
-    'django.contrib.auth.backends.ModelBackend',
-)
-AUTH_LDAP_SERVER_URI = "ldap://169.44.130.107:10389"
-AUTH_LDAP_BIND_DN = ""
-AUTH_LDAP_BIND_PASSWORD = ""
-AUTH_LDAP_USER_SEARCH = LDAPSearch("o=ibmcloud",
-                                   ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
+# AUTHENTICATION_BACKENDS = (
+#     'django_auth_ldap.backend.LDAPBackend',
+#     'django.contrib.auth.backends.ModelBackend',
+# )
+# AUTH_LDAP_SERVER_URI = "ldap://169.44.130.107:10389"
+# AUTH_LDAP_BIND_DN = ""
+# AUTH_LDAP_BIND_PASSWORD = ""
+# AUTH_LDAP_USER_SEARCH = LDAPSearch("o=ibmcloud",
+#                                    ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
