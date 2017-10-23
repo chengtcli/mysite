@@ -5,6 +5,8 @@ from django.core.urlresolvers import reverse
 
 from .models import Question, Choice
 import hashlib
+import polls.wechat.receive as receive
+import polls.wechat.reply as reply
 
 
 def index(request):
@@ -27,25 +29,39 @@ def vote(request, question_id):
     return HttpResponse("You're voting on question %s." % question_id)
 
 def wechat(request):
-    data = request.GET
-    if len(data) == 0:
-        return HttpResponse("hello, this is handle view")
-    signature = data['signature']
-    timestamp = data['timestamp']
-    nonce = data['nonce']
-    echostr = data['echostr']
-    token = "litoken"
-
-    ldata = [token, timestamp, nonce]
-    ldata.sort()
-    sha1 = hashlib.sha1()
-    map(sha1.update, ldata)
-    hashcode = sha1.hexdigest()
-    print "handle/GET func: hashcode, signature: ", hashcode, signature
-    if hashcode == signature:
-        return HttpResponse(echostr)
-    else:
-        return HttpResponse("")
+    if request.method == 'GET':
+        data = request.GET
+        if len(data) == 0:
+            return HttpResponse("hello, this is handle view")
+        signature = data['signature']
+        timestamp = data['timestamp']
+        nonce = data['nonce']
+        echostr = data['echostr']
+        token = "litoken"
+    
+        ldata = [token, timestamp, nonce]
+        ldata.sort()
+        sha1 = hashlib.sha1()
+        map(sha1.update, ldata)
+        hashcode = sha1.hexdigest()
+        print "handle/GET func: hashcode, signature: ", hashcode, signature
+        if hashcode == signature:
+            return HttpResponse(echostr)
+        else:
+            return HttpResponse("")
+    elif request.method == 'POST':
+        webData = request.readlines()
+        print "Handle Post webdata is ", webData   #后台打日志
+        recMsg = receive.parse_xml(webData)
+        if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'text':
+            toUser = recMsg.FromUserName
+            fromUser = recMsg.ToUserName
+            content = "test"
+            replyMsg = reply.TextMsg(toUser, fromUser, content)
+            return HttpResponse(replyMsg.send())
+        else:
+            print "暂且不处理"
+            return HttpResponse("success")
 # 
 # def vote(request, question_id):
 #     question = get_object_or_404(Question, pk=question_id)
